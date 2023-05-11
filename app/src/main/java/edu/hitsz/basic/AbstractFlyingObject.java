@@ -39,6 +39,7 @@ public abstract class AbstractFlyingObject {
     /**
      * 图片,
      * null 表示未设置
+     * TODO Bitmap?
      */
     protected Bitmap image = null;
 
@@ -61,6 +62,7 @@ public abstract class AbstractFlyingObject {
      */
     protected boolean isValid = true;
 
+    // TODO 是不是没用？
     public AbstractFlyingObject() {
     }
 

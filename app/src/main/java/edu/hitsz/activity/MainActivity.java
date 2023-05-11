@@ -1,6 +1,5 @@
 package edu.hitsz.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -26,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         Button medium_btn = findViewById(R.id.medium_btn);
         Button easy_btn = findViewById(R.id.easy_btn);
         Button hard_btn = findViewById(R.id.hard_btn);
+//        Button music_btn = findViewById(R.id.music_btn);
 
         getScreenHW();
 

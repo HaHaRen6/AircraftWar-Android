@@ -1,19 +1,30 @@
 package edu.hitsz.aircraft;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import edu.hitsz.ImageManager;
 import edu.hitsz.activity.MainActivity;
 import edu.hitsz.bullet.AbstractBullet;
-import edu.hitsz.bullet.HeroBullet;
+import edu.hitsz.shootStrategy.DirectShootStrategy;
 
 /**
  * 英雄飞机，游戏玩家操控，遵循单例模式（singleton)
  * 【单例模式】
+ * 【策略模式】客户端(client)：利用 shootStrategy 产生特定的子弹
+ *
  * @author hitsz
  */
 public class HeroAircraft extends AbstractAircraft {
+
+    /**
+     * 子弹伤害
+     */
+    private int power = 30;
+
+    /**
+     * 子弹射击方向 (向下发射：1，向上发射：-1)
+     */
+    private int direction = -1;
 
 /*
         volatile 修饰，
@@ -24,7 +35,9 @@ public class HeroAircraft extends AbstractAircraft {
         若发生重排序，假设 A 线程执行了 1 和 3 ，还没有执行 2，B 线程来到判断 NULL，B 线程就会直接返回还没初始化的 instance 了。
         volatile 可以避免重排序。
     */
-    /** 英雄机对象单例 */
+    /**
+     * 英雄机对象单例
+     */
     private volatile static HeroAircraft heroAircraft;
 
     /**
@@ -32,24 +45,22 @@ public class HeroAircraft extends AbstractAircraft {
      */
     private HeroAircraft() {
         super(MainActivity.screenWidth / 2, MainActivity.screenHeight - ImageManager.HERO_IMAGE.getHeight(),
-                0, -5, 1000);
-        this.shootNum = 1;
-        this.power = 30;
-        this.direction = -1;
-        this.rate = 1.5;
+                0, 0, 1000);
     }
 
 
     /**
      * 通过单例模式获得初始化英雄机
      * 【单例模式：双重校验锁方法】
+     *
      * @return 英雄机单例
      */
-    public static HeroAircraft getHeroAircraft(){
+    public static HeroAircraft getHeroAircraft() {
         if (heroAircraft == null) {
             synchronized (HeroAircraft.class) {
                 if (heroAircraft == null) {
                     heroAircraft = new HeroAircraft();
+                    heroAircraft.setShootStrategy(new DirectShootStrategy());
                 }
             }
         }
@@ -62,19 +73,8 @@ public class HeroAircraft extends AbstractAircraft {
     }
 
     @Override
-    public  List<AbstractBullet> shoot() {
-        List<AbstractBullet> res = new LinkedList<>();
-        int x = this.getLocationX();
-        int y = this.getLocationY() + direction*2;
-        int speedX = 0;
-        int speedY = this.getSpeedY() + direction*5;
-        AbstractBullet abstractBullet;
-        for(int i=0; i<shootNum; i++){
-            // 子弹发射位置相对飞机位置向前偏移
-            // 多个子弹横向分散
-            abstractBullet = new HeroBullet(x + (i*2 - shootNum + 1)*10, y, speedX, speedY, power);
-            res.add(abstractBullet);
-        }
-        return res;
+    public List<AbstractBullet> shoot() {
+        // TODO rate可以改改
+        return shootStrategy.shoot(getLocationX(), getLocationY(), getSpeedY(), direction, power);
     }
 }

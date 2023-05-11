@@ -9,4 +9,8 @@ public class HeroBullet extends AbstractBullet {
         super(locationX, locationY, speedX, speedY, power);
     }
 
+    @Override
+    public void update() {
+    }
+
 }
