@@ -95,7 +95,7 @@ public class BossEnemy extends AbstractAircraft implements Enemy, Subscriber {
             } else {
                 propFactory = new BulletPropFactory();
             }
-            propRes.add(propFactory.createProp(x + (i * 2 - dropNum + 1) * 30, y + 95, 7));
+            propRes.add(propFactory.createProp(x + (i * 2 - dropNum + 1) * 90, y + 95, 7));
         }
         props.addAll(propRes);
     }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.CheckBox;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,28 +27,36 @@ public class MainActivity extends AppCompatActivity {
         Button easy_btn = findViewById(R.id.easy_btn);
         Button hard_btn = findViewById(R.id.hard_btn);
 //        Button music_btn = findViewById(R.id.music_btn);
+        Bundle bundle = new Bundle();
 
         getScreenHW();
 
         Intent intent = new Intent(MainActivity.this, GameActivity.class);
         medium_btn.setOnClickListener(view -> {
             gameType=1;
-            intent.putExtra("gameType",gameType);
+            bundle.putInt("gameType",gameType);
+            bundle.putBoolean("musicSwitch",musicSwitch());
+            intent.putExtras(bundle);
             startActivity(intent);
         });
 
         easy_btn.setOnClickListener(view -> {
             gameType =2;
-            intent.putExtra("gameType",gameType);
+            bundle.putInt("gameType",gameType);
+            bundle.putBoolean("musicSwitch",musicSwitch());
+            intent.putExtras(bundle);
             startActivity(intent);
         });
 
         hard_btn.setOnClickListener(view -> {
             gameType =3;
-            intent.putExtra("gameType",gameType);
+            bundle.putInt("gameType",gameType);
+            bundle.putBoolean("musicSwitch",musicSwitch());
+            intent.putExtras(bundle);
             startActivity(intent);
         });
     }
+
     public void getScreenHW(){
         //定义DisplayMetrics 对象
         DisplayMetrics dm = new DisplayMetrics();
@@ -61,9 +70,14 @@ public class MainActivity extends AppCompatActivity {
 
         Log.i(TAG, "screenWidth : " + screenWidth + " screenHeight : " + screenHeight);
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
 
+    public boolean musicSwitch(){
+        CheckBox music_swc = findViewById(R.id.musicSwitch);
+        return music_swc.isChecked();
     }
 }

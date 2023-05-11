@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import java.util.HashMap;
 import java.util.Map;
 
+import edu.hitsz.aircraft.BossEnemy;
 import edu.hitsz.aircraft.EliteEnemy;
 import edu.hitsz.aircraft.HeroAircraft;
 import edu.hitsz.aircraft.MobEnemy;
@@ -50,7 +51,7 @@ public class ImageManager {
         ImageManager.FIRE_SUPPLY_IMAGE = BitmapFactory.decodeResource(context.getResources(), R.drawable.prop_bullet);
         ImageManager.HP_SUPPLY_IMAGE = BitmapFactory.decodeResource(context.getResources(), R.drawable.prop_blood);
         ImageManager.BOMB_SUPPLY_IMAGE = BitmapFactory.decodeResource(context.getResources(), R.drawable.prop_bomb);
-
+        ImageManager.BOSS_ENEMY_IMAGE = BitmapFactory.decodeResource(context.getResources(),R.drawable.boss);
 
 
         CLASSNAME_IMAGE_MAP.put(HeroAircraft.class.getName(), HERO_IMAGE);
@@ -62,6 +63,7 @@ public class ImageManager {
         CLASSNAME_IMAGE_MAP.put(BulletProp.class.getName(), FIRE_SUPPLY_IMAGE);
         CLASSNAME_IMAGE_MAP.put(BloodProp.class.getName(), HP_SUPPLY_IMAGE);
         CLASSNAME_IMAGE_MAP.put(BombProp.class.getName(), BOMB_SUPPLY_IMAGE);
+        CLASSNAME_IMAGE_MAP.put(BossEnemy.class.getName(), BOSS_ENEMY_IMAGE);
     }
 
     public static Bitmap get(String className){

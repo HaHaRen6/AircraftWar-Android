@@ -1,5 +1,9 @@
 package edu.hitsz.prop;
 
+import android.media.SoundPool;
+
+import java.util.HashMap;
+
 import edu.hitsz.aircraft.HeroAircraft;
 import edu.hitsz.application.Publisher;
 
@@ -15,9 +19,10 @@ public class BombProp extends AbstractProp {
     }
 
     @Override
-    public void active(HeroAircraft heroAircraft,Publisher publisher) {
-//        MusicThread m = new MusicThread("src/videos/bomb_explosion.wav");
-//        m.start();
+    public void active(HeroAircraft heroAircraft, Publisher publisher, SoundPool mySoundPool, HashMap<String, Integer> soundPoolMap) {
+        if (mySoundPool != null && soundPoolMap.get("bomb_explosion") != null) {
+            mySoundPool.play(soundPoolMap.get("bomb_explosion"), 1, 1, 0, 0, 1f);
+        }
         publisher.bombActive();
     }
 

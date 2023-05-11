@@ -1,5 +1,6 @@
 package edu.hitsz.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -17,7 +18,8 @@ import edu.hitsz.game.MediumGame;
 public class GameActivity extends AppCompatActivity {
     private static final String TAG = "GameActivity";
 
-    private int gameType=0;
+    private int gameType = 0;
+    private boolean musicSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,25 +29,47 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                Log.d(TAG,"handleMessage");
+                Log.d(TAG, "handleMessage");
                 if (msg.what == 1) {
-                    Toast.makeText(GameActivity.this,"GameOver",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GameActivity.this, "GameOver", Toast.LENGTH_SHORT).show();
+                } else if (msg.what == 2) {
+                    Toast.makeText(GameActivity.this, "Boss来咯", Toast.LENGTH_SHORT).show();
                 }
             }
         };
-        if(getIntent() != null){
-            gameType = getIntent().getIntExtra("gameType",1);
+        if (getIntent() != null) {
+            Bundle bundle = getIntent().getExtras();
+            gameType = bundle.getInt("gameType", 1);
+            musicSwitch = bundle.getBoolean("musicSwitch", false);
         }
-        BaseGame basGameView;
-        if(gameType == 1){
-            basGameView = new MediumGame(this,handler);
+        BaseGame baseGameView;
+        if (gameType == 1) {
+            baseGameView = new MediumGame(this, handler, musicSwitch);
+        } else if (gameType == 3) {
+            baseGameView = new HardGame(this, handler, musicSwitch);
+        } else {
+            baseGameView = new EasyGame(this, handler, musicSwitch);
+        }
+        setContentView(baseGameView);
 
-        }else if(gameType == 3){
-            basGameView = new HardGame(this,handler);
-        }else{
-            basGameView = new EasyGame(this,handler);
-        }
-        setContentView(basGameView);
+        Runnable r = () -> {
+
+            try {
+                while (!baseGameView.gameOverFlag) {
+                    Thread.sleep(1000);
+//                    System.out.println("123456");
+                }
+//                System.out.println("654321");
+                Intent intent = new Intent(GameActivity.this, InputActivity.class);
+//                System.out.println("1111");
+                startActivity(intent);
+//                System.out.println("2222");
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        };
+        new Thread(r,"t1").start();
+
     }
 
 

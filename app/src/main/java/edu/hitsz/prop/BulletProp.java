@@ -1,5 +1,9 @@
 package edu.hitsz.prop;
 
+import android.media.SoundPool;
+
+import java.util.HashMap;
+
 import edu.hitsz.aircraft.HeroAircraft;
 import edu.hitsz.application.Publisher;
 import edu.hitsz.shootStrategy.DirectShootStrategy;
@@ -17,9 +21,10 @@ public class BulletProp extends AbstractProp {
     }
 
     @Override
-    public void active(HeroAircraft heroAircraft, Publisher publisher) {
-//        MusicThread m = new MusicThread("src/videos/get_supply.wav");
-//        m.start();
+    public void active(HeroAircraft heroAircraft, Publisher publisher, SoundPool mySoundPool, HashMap<String, Integer> soundPoolMap) {
+        if (mySoundPool != null && soundPoolMap.get("get_supply") != null) {
+            mySoundPool.play(soundPoolMap.get("get_supply"), 1, 1, 0, 0, 1f);
+        }
         Runnable r = () -> {
             try {
                 for (int i = 0; i < 10; i++) {

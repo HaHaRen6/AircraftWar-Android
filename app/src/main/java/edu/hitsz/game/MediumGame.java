@@ -15,34 +15,23 @@ import edu.hitsz.factory.MobEnemyFactory;
 public class MediumGame extends BaseGame {
     @Override
     protected float eliteProbability(int time) {
-        return (float) Math.min(0.1 + (float) time / 200000, 0.5);
+        return (float) Math.min(0.15 + (float) time / 200000, 0.5);
     }
 
-    public MediumGame(Context context, Handler handler) {
-        super(context,handler);
+    public MediumGame(Context context, Handler handler,Boolean musicSwitch) {
+        super(context,handler,musicSwitch);
         this.backGround = ImageManager.BACKGROUND2_IMAGE;
         this.maxEnemyNumber = 5;
         this.bossScore = 400;
         this.scoreFile = "MediumGameScore.txt";
     }
 
-    @Override
-    protected void outputInformation() {
-        System.out.println("你选择的是普通模式");
-        System.out.println("有boss机，有精英机，难度随时间变化");
-        System.out.println("最大飞机数为 5 个");
-        System.out.println("精英机产生概率随时间增加");
-        System.out.println("精英机血量随时间变化");
-        System.out.println("普通机速度随时间变化");
-        System.out.println("产生boss机的分数阈值为 400 分");
-    }
 
     @Override
     protected AbstractAircraft createBoss(Publisher publisher) {
         EnemyFactory enemyFactory = new BossEnemyFactory();
         AbstractAircraft newEnemy = enemyFactory.createEnemy();
         publisher.addSubscriber((Subscriber) newEnemy);
-
         return newEnemy;
     }
 

@@ -18,18 +18,11 @@ public class EasyGame extends BaseGame {
         return 0;
     }
 
-    public EasyGame(Context context, Handler handler) {
-        super(context,handler);
+    public EasyGame(Context context, Handler handler,Boolean musicSwitch) {
+        super(context,handler,musicSwitch);
         this.backGround = ImageManager.BACKGROUND1_IMAGE;
         this.maxEnemyNumber = 4;
         this.scoreFile = "EasyGameScore.txt";
-    }
-
-    @Override
-    protected void outputInformation() {
-        System.out.println("你选择的是简单模式");
-        System.out.println("无boss机，无精英机，难度不随时间变化");
-        System.out.println("最大飞机数为 4 个");
     }
 
     @Override

@@ -1,5 +1,9 @@
 package edu.hitsz.prop;
 
+import android.media.SoundPool;
+
+import java.util.HashMap;
+
 import edu.hitsz.activity.MainActivity;
 import edu.hitsz.aircraft.HeroAircraft;
 import edu.hitsz.application.Publisher;
@@ -40,5 +44,5 @@ public abstract class AbstractProp extends AbstractFlyingObject {
      * <p>
      * 道具起作用
      */
-    public abstract void active(HeroAircraft heroAircraft, Publisher publisher);
+    public abstract void active(HeroAircraft heroAircraft, Publisher publisher, SoundPool mySoundPool, HashMap<String, Integer> soundPoolMap);
 }
