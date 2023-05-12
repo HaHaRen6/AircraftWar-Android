@@ -11,24 +11,43 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/textView_scoreText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:gravity="center"
+            android:text="你的分数"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/textView_score"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:text="600"
+            android:textSize="90sp" />
+
+        <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:gravity="center"
             android:text="请输入你的姓名"
-            android:textSize="34sp" />
+            android:textSize="24sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="520dp"
             android:gravity="center"
             android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="394dp"
+                android:layout_height="255dp"
+                android:layout_marginBottom="300dp"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -36,8 +55,7 @@
                     android:id="@+id/textInputEditText"
                     android:layout_width="337dp"
                     android:layout_height="66dp"
-                    android:gravity="center"
-                    android:hint="name"
+                    android:hint="姓名"
                     android:orientation="vertical"
                     android:textSize="20sp" />
 
@@ -45,7 +63,7 @@
                     android:id="@+id/inputName_btn"
                     android:layout_width="118dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="100dp"
+                    android:layout_marginTop="50dp"
                     android:text="确认"
                     android:textSize="20sp" />
 

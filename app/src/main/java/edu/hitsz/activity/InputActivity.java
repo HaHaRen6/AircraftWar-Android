@@ -1,15 +1,16 @@
 package edu.hitsz.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 
 import edu.hitsz.R;
+import edu.hitsz.game.BaseGame;
 
 public class InputActivity extends AppCompatActivity {
 
@@ -22,20 +23,26 @@ public class InputActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // 布局初始化时加载布局文件
         setContentView(R.layout.activity_input);
+
         Button inputName_btn = findViewById(R.id.inputName_btn);
-        TextView textView = findViewById(R.id.textView);
+        TextView textView_score = findViewById(R.id.textView_score);
         TextInputEditText textInputEditText = findViewById(R.id.textInputEditText);
 
         Bundle bundle = new Bundle();
+        System.out.println(BaseGame.getScore());
+        textView_score.setText(String.valueOf(BaseGame.getScore()));
 
-//        Intent intent = new Intent(InputActivity.this, GameActivity.class);
+        Intent intent = new Intent(InputActivity.this, RankingActivity.class);
         inputName_btn.setOnClickListener(view -> {
-            Toast.makeText(InputActivity.this, textInputEditText.getText(), Toast.LENGTH_SHORT).show();
+
+            intent.putExtra("name",textInputEditText.getText());
+//            Toast.makeText(InputActivity.this, "后面还没做", Toast.LENGTH_SHORT).show();
 //            bundle.putInt("gameType",gameType);
 //            bundle.putBoolean("musicSwitch",musicSwitch());
 //            intent.putExtras(bundle);
-//            startActivity(intent);
+            startActivity(intent);
         });
 
     }
