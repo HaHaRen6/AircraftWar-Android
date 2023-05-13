@@ -85,7 +85,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
      */
     private int timeInterval = 16;
 
-    private final HeroAircraft heroAircraft;
+    private HeroAircraft heroAircraft;
     protected final List<AbstractAircraft> enemyAircrafts;
     private final List<AbstractBullet> heroBullets;
     private final List<AbstractBullet> enemyBullets;
@@ -190,8 +190,6 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
 
         // 初始化
         heroAircraft = HeroAircraft.getHeroAircraft();
-        heroAircraft.setHp(1000);
-        heroAircraft.setLocation(MainActivity.screenWidth / 2, MainActivity.screenHeight - ImageManager.HERO_IMAGE.getHeight());
         enemyAircrafts = new LinkedList<>();
         heroBullets = new LinkedList<>();
         enemyBullets = new LinkedList<>();
@@ -199,6 +197,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
         eliteProbability = eliteProbability(0);
 
         heroController();
+
     }
 
     /**
@@ -546,7 +545,6 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
         props.removeIf(AbstractFlyingObject::notValid);
 
         if (heroAircraft.getHp() <= 0) {
-
             if (mySoundPool != null && soundPoolMap.get("game_over") != null) {
                 mySoundPool.play(soundPoolMap.get("game_over"), 1, 1, 0, 0, 1f);
             }

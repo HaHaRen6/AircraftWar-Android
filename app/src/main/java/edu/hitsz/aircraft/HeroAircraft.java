@@ -21,6 +21,8 @@ public class HeroAircraft extends AbstractAircraft {
      */
     private int power = 30;
 
+//    private boolean isValid;
+
     /**
      * 子弹射击方向 (向下发射：1，向上发射：-1)
      */
@@ -64,6 +66,9 @@ public class HeroAircraft extends AbstractAircraft {
                 }
             }
         }
+        heroAircraft.isValid = true;
+        heroAircraft.setHp(1000);
+        heroAircraft.setLocation(MainActivity.screenWidth / 2, MainActivity.screenHeight - ImageManager.HERO_IMAGE.getHeight());
         return heroAircraft;
     }
 
