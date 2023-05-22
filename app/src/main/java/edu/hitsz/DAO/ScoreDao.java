@@ -1,6 +1,6 @@
 package edu.hitsz.DAO;
 
-import java.io.File;
+import android.content.Context;
 
 /**
  * 【数据访问对象模式】DAO接口
@@ -13,12 +13,12 @@ public interface ScoreDao {
      *
      * @param scoreInfo 数据对象
      */
-    void addItem(ScoreInfo scoreInfo, File scoreFile);
+    void addItem(Context context, ScoreInfo scoreInfo, String scoreFile);
 
     /**
      * 从txt文件获取对象
      */
-    void getAllItems(File scoreFile);
+    void getAllItems(Context context, String scoreFile);
 
     /**
      * 排序分数
@@ -30,6 +30,6 @@ public interface ScoreDao {
      */
     String[][] outPutItems();
 
-    void deleteByTime(String[][] str, File scoreFile);
+    void deleteByTime(Context context, String[][] str, String scoreFile);
 
 }

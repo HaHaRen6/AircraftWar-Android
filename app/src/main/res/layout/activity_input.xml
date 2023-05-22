@@ -55,7 +55,7 @@
                     android:id="@+id/textInputEditText"
                     android:layout_width="337dp"
                     android:layout_height="66dp"
-                    android:hint="姓名"
+                    android:hint="player"
                     android:orientation="vertical"
                     android:textSize="20sp" />
 

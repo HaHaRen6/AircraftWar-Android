@@ -17,7 +17,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import edu.hitsz.DAO.ScoreDao;
+import edu.hitsz.DAO.ScoreDaoImpl;
 import edu.hitsz.R;
+import edu.hitsz.game.BaseGame;
 
 public class RankingActivity extends AppCompatActivity {
 
@@ -25,6 +28,7 @@ public class RankingActivity extends AppCompatActivity {
 
     public static int screenWidth;
     public static int screenHeight;
+    private ListView rankingList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,17 +36,9 @@ public class RankingActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_ranking);
         Button newGame_btn = findViewById(R.id.newGame_btn);
-        ListView rankingList = findViewById(R.id.rankingList);
+        rankingList = findViewById(R.id.rankingList);
 
-        SimpleAdapter simpleAdapter = new SimpleAdapter(
-                this,
-                getData(),
-                R.layout.listitem,
-                new String[]{"rank", "name", "score", "date"},
-                new int[]{R.id.rank, R.id.name, R.id.score, R.id.date});
-
-        // 添加并显示数据
-        rankingList.setAdapter(simpleAdapter);
+        flushAdapter();
 
         //添加单击监听
         rankingList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -63,6 +59,31 @@ public class RankingActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Toast.makeText(RankingActivity.this, "删除第" + (position + 1) + "条记录", Toast.LENGTH_SHORT).show();
+                        ScoreDao scoreDao = new ScoreDaoImpl();
+                        scoreDao.getAllItems(RankingActivity.this, BaseGame.scoreFile);
+                        scoreDao.sortByScore();
+                        String[][] items = scoreDao.outPutItems();
+//                        for (String[] item : items) {
+//                            for (String element : item) {
+//                                System.out.print(element + ' ');
+//                            }
+//                            System.out.println();
+//                        }
+                        items[position][3] = "delete";
+//                        for (String[] item : items) {
+//                            for (String element : item) {
+//                                System.out.print(element + ' ');
+//                            }
+//                            System.out.println();
+//                        }
+                        scoreDao.deleteByTime(RankingActivity.this, items, BaseGame.scoreFile);
+//                        for (String[] item : items) {
+//                            for (String element : item) {
+//                                System.out.print(element + ' ');
+//                            }
+//                            System.out.println();
+//                        }
+                        flushAdapter();
                     }
                 });
                 builder.setNegativeButton("否", new DialogInterface.OnClickListener() {
@@ -80,8 +101,6 @@ public class RankingActivity extends AppCompatActivity {
 ////                Map<String, Object> clkmap = (Map<String, Object>) arg0.getItemAtPosition(arg2);
 ////                setTitle(clkmap.get("title").toString()+"的网址为："+clkmap.get("info").toString());
 //            }
-
-
         });
 
         // 重新游戏
@@ -99,25 +118,38 @@ public class RankingActivity extends AppCompatActivity {
 
     private List<HashMap<String, String>> getData() {
         ArrayList<HashMap<String, String>> data = new ArrayList<>();
-        HashMap<String, String> user = new HashMap<>();
+        HashMap<String, String> user;
+        ScoreDao scoreDao = new ScoreDaoImpl();
+        scoreDao.getAllItems(RankingActivity.this, BaseGame.scoreFile);
+        scoreDao.sortByScore();
+        String[][] items = scoreDao.outPutItems();
 
-        // test
-
-        user.put("rank", "1");
-        user.put("name", "hhr");
-        user.put("score", "2000");
-        user.put("date", "05-12 21:53:40");
-        data.add(user);
-
-        user = new HashMap<>();
-        user.put("rank", "2");
-        user.put("name", "hhhhh");
-        user.put("score", "500");
-        user.put("date", "05-12 21:53:40");
-        data.add(user);
+        for (int i = 0; i < items.length - 1; i++) {
+            String[] item = items[i];
+            user = new HashMap<>();
+            user.put("rank", item[0]);
+            user.put("score", item[1]);
+            user.put("name", item[2]);
+            user.put("date", item[3]);
+            data.add(user);
+        }
 
 
         return data;
     }
 
+    private void flushAdapter() {
+
+        // 初始化适配器
+        SimpleAdapter simpleAdapter = new SimpleAdapter(
+                this,
+                getData(),
+                R.layout.listitem,
+                new String[]{"rank", "name", "score", "date"},
+                new int[]{R.id.rank, R.id.name, R.id.score, R.id.date}
+        );
+
+        // 添加并显示数据
+        rankingList.setAdapter(simpleAdapter);
+    }
 }

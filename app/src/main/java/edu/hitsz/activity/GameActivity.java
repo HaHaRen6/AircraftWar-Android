@@ -25,6 +25,9 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        /*
+          Android系统输出信息
+         */
         Handler handler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message msg) {
@@ -37,11 +40,19 @@ public class GameActivity extends AppCompatActivity {
                 }
             }
         };
+
+        /*
+          接受intent传递的信息
+         */
         if (getIntent() != null) {
             Bundle bundle = getIntent().getExtras();
             gameType = bundle.getInt("gameType", 1);
             musicSwitch = bundle.getBoolean("musicSwitch", false);
         }
+
+        /*
+          开始不同难度的游戏
+         */
         BaseGame baseGameView;
         if (gameType == 1) {
             baseGameView = new MediumGame(this, handler, musicSwitch);
@@ -52,23 +63,24 @@ public class GameActivity extends AppCompatActivity {
         }
         setContentView(baseGameView);
 
-        Runnable r = () -> {
-
+        /*
+          等待游戏结束
+          每隔 1s 检测一次游戏结束flag
+         */
+        new Thread(() -> {
             try {
                 while (!baseGameView.gameOverFlag) {
                     Thread.sleep(1000);
-//                    System.out.println("123456");
                 }
-//                System.out.println("654321");
+
+                // 切换至输入姓名界面
                 Intent intent = new Intent(GameActivity.this, InputActivity.class);
-//                System.out.println("1111");
                 startActivity(intent);
-//                System.out.println("2222");
+
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-        };
-        new Thread(r,"t1").start();
+        }).start();
 
     }
 

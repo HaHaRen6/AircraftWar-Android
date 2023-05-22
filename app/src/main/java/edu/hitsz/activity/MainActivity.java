@@ -26,12 +26,15 @@ public class MainActivity extends AppCompatActivity {
         Button medium_btn = findViewById(R.id.medium_btn);
         Button easy_btn = findViewById(R.id.easy_btn);
         Button hard_btn = findViewById(R.id.hard_btn);
-//        Button music_btn = findViewById(R.id.music_btn);
         Bundle bundle = new Bundle();
 
         getScreenHW();
 
+        /*
+          不同按钮开始不同难度游戏
+         */
         Intent intent = new Intent(MainActivity.this, GameActivity.class);
+        // 普通难度
         medium_btn.setOnClickListener(view -> {
             gameType=1;
             bundle.putInt("gameType",gameType);
@@ -39,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtras(bundle);
             startActivity(intent);
         });
-
+        // 简单难度
         easy_btn.setOnClickListener(view -> {
             gameType =2;
             bundle.putInt("gameType",gameType);
@@ -47,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtras(bundle);
             startActivity(intent);
         });
-
+        // 困难难度
         hard_btn.setOnClickListener(view -> {
             gameType =3;
             bundle.putInt("gameType",gameType);

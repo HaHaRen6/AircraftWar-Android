@@ -22,7 +22,7 @@ public class EasyGame extends BaseGame {
         super(context,handler,musicSwitch);
         this.backGround = ImageManager.BACKGROUND1_IMAGE;
         this.maxEnemyNumber = 4;
-        this.scoreFile = "EasyGameScore.txt";
+        scoreFile = "EasyGameScore.txt";
     }
 
     @Override

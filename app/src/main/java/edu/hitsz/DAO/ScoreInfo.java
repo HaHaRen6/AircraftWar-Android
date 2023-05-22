@@ -1,5 +1,7 @@
 package edu.hitsz.DAO;
 
+import java.util.Objects;
+
 /**
  * 【数据访问对象模式】数据对象实体类
  *
@@ -23,7 +25,11 @@ public class ScoreInfo {
     }
 
     public void setName(String name) {
-        this.name = name;
+        if (Objects.equals(name, "")) {
+            this.name = "player";
+        } else {
+            this.name = name;
+        }
     }
 
     public String getDate() {

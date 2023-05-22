@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.icu.text.SimpleDateFormat;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
@@ -19,7 +18,6 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -173,7 +171,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
         ImageManager.initImage(context);
         score = 0;
 
-        // TODO 降低耦合
+        // 降低耦合
         if (musicSwitch) {
             bgmMediaPlayer = MediaPlayer.create(context, R.raw.bgm);
             bgmMediaPlayer.start();
@@ -390,7 +388,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
     /**
      * 分数文件名字
      */
-    protected String scoreFile;
+    public static String scoreFile;
 
     private void outCheckAction() {
         for (AbstractAircraft enemyAircraft : enemyAircrafts) {
@@ -549,10 +547,6 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
                 mySoundPool.play(soundPoolMap.get("game_over"), 1, 1, 0, 0, 1f);
             }
 
-            // 以设定格式获取当前时间
-            Date date = new Date();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd HH:mm");
-            System.out.println(dateFormat.format(date));
 //
 //            // 产生本次成绩
 //            ScoreInfo scoreInfo = new ScoreInfo();

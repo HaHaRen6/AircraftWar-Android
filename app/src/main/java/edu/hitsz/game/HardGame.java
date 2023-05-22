@@ -21,7 +21,7 @@ public class HardGame extends BaseGame {
         this.backGround = ImageManager.BACKGROUND3_IMAGE;
         this.maxEnemyNumber = 7;
         this.bossScore = 300;
-        this.scoreFile = "HardGameScore.txt";
+        scoreFile = "HardGameScore.txt";
     }
 
     @Override

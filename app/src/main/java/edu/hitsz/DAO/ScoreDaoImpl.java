@@ -1,6 +1,13 @@
 package edu.hitsz.DAO;
 
-import java.io.*;
+import android.content.Context;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,16 +25,16 @@ public class ScoreDaoImpl implements ScoreDao {
         scoreInfos = new ArrayList<>();
     }
 
-    public void addItem(ScoreInfo scoreInfo, File scoreFile) {
-        OutputStream fOut = null;
+    public void addItem(Context context, ScoreInfo scoreInfo, String scoreFile) {
+        FileOutputStream fOut = null;
         OutputStreamWriter writer = null;
 
         try {
             // 构建FileOutputStream对象,文件不存在会自动新建
-            fOut = new FileOutputStream(scoreFile, true);
+            fOut = context.openFileOutput(scoreFile, Context.MODE_APPEND);
 
             // 构建OutputStreamWriter对象,参数可以指定编码,默认为操作系统默认编码
-            writer = new OutputStreamWriter(fOut, "UTF-8");
+            writer = new OutputStreamWriter(fOut, StandardCharsets.UTF_8);
 
             // 写入到缓冲区
             writer.append(String.valueOf(scoreInfo.getScore())).append("\t");
@@ -36,28 +43,38 @@ public class ScoreDaoImpl implements ScoreDao {
 
             // 刷新缓冲区（不知道有没有用）
             writer.flush();
+            fOut.flush();
         } catch (IOException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         } finally {
             try {
                 //关闭写入流,同时会把缓冲区内容写入文件
-                writer.close();
+                if (writer != null) {
+                    writer.close();
+                }
 
                 //关闭输出流,释放系统资源
-                fOut.close();
+                if (fOut != null) {
+                    fOut.close();
+                }
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         }
     }
 
-    public void getAllItems(File scoreFile) {
+    public void getAllItems(Context context, String scoreFile) {
         BufferedReader reader = null;
-        FileReader fileReader = null;
+        FileInputStream fIn = null;
+        InputStreamReader isr = null;
+        scoreInfos = new ArrayList<>();
 
         try {
-            fileReader = new FileReader(scoreFile);
-            reader = new BufferedReader(fileReader);
+            fIn = context.openFileInput(scoreFile);
+            isr = new InputStreamReader(fIn, StandardCharsets.UTF_8);
+            reader = new BufferedReader(isr);
+
             String line = "";
             while ((line = reader.readLine()) != null) {
                 // 按 \t 分割，存在parts里
@@ -74,11 +91,14 @@ public class ScoreDaoImpl implements ScoreDao {
             throw new RuntimeException(e);
         } finally {
             try {
-                if (fileReader != null) {
-                    fileReader.close();
-                }
                 if (reader != null) {
                     reader.close();
+                }
+                if (isr != null) {
+                    isr.close();
+                }
+                if (fIn != null) {
+                    fIn.close();
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -88,9 +108,7 @@ public class ScoreDaoImpl implements ScoreDao {
 
 
     public void sortByScore() {
-        scoreInfos.sort((b, a) -> {
-            return a.getScore() - b.getScore();
-        });
+        scoreInfos.sort((b, a) -> a.getScore() - b.getScore());
     }
 
     public String[][] outPutItems() {
@@ -106,13 +124,13 @@ public class ScoreDaoImpl implements ScoreDao {
         return str;
     }
 
-    public void deleteByTime(String[][] str, File scoreFile) {
-        OutputStream fOut = null;
+    public void deleteByTime(Context context, String[][] str, String scoreFile) {
+        FileOutputStream fOut = null;
         OutputStreamWriter writer = null;
 
         try {
             // 构建FileOutputStream对象,文件不存在会自动新建
-            fOut = new FileOutputStream(scoreFile);
+            fOut = context.openFileOutput(scoreFile, Context.MODE_PRIVATE);
 
             // 构建OutputStreamWriter对象,参数可以指定编码,默认为操作系统默认编码
             writer = new OutputStreamWriter(fOut, StandardCharsets.UTF_8);
@@ -128,6 +146,7 @@ public class ScoreDaoImpl implements ScoreDao {
 
             // 刷新缓冲区（不知道有没有用）
             writer.flush();
+            fOut.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
@@ -140,7 +159,7 @@ public class ScoreDaoImpl implements ScoreDao {
                 assert fOut != null;
                 fOut.close();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         }
     }

@@ -9,6 +9,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import edu.hitsz.DAO.ScoreDao;
+import edu.hitsz.DAO.ScoreDaoImpl;
+import edu.hitsz.DAO.ScoreInfo;
 import edu.hitsz.R;
 import edu.hitsz.game.BaseGame;
 
@@ -30,18 +36,25 @@ public class InputActivity extends AppCompatActivity {
         TextView textView_score = findViewById(R.id.textView_score);
         TextInputEditText textInputEditText = findViewById(R.id.textInputEditText);
 
-        Bundle bundle = new Bundle();
-        System.out.println(BaseGame.getScore());
+        // 显示分数
         textView_score.setText(String.valueOf(BaseGame.getScore()));
 
-        Intent intent = new Intent(InputActivity.this, RankingActivity.class);
+        // 输入名字按钮监听器
         inputName_btn.setOnClickListener(view -> {
 
-            intent.putExtra("name",textInputEditText.getText());
-//            Toast.makeText(InputActivity.this, "后面还没做", Toast.LENGTH_SHORT).show();
-//            bundle.putInt("gameType",gameType);
-//            bundle.putBoolean("musicSwitch",musicSwitch());
-//            intent.putExtras(bundle);
+            // 以设定的格式获取当前时间
+            Date date = new Date();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd HH:mm:ss");
+
+            ScoreInfo scoreInfo = new ScoreInfo();
+            scoreInfo.setScore(BaseGame.getScore());
+            scoreInfo.setDate(dateFormat.format(date));
+            scoreInfo.setName(String.valueOf(textInputEditText.getText()));
+
+            ScoreDao scoreDao = new ScoreDaoImpl();
+            scoreDao.addItem(InputActivity.this, scoreInfo, BaseGame.scoreFile);
+
+            Intent intent = new Intent(InputActivity.this, RankingActivity.class);
             startActivity(intent);
         });
 

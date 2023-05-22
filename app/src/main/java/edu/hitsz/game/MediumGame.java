@@ -23,7 +23,7 @@ public class MediumGame extends BaseGame {
         this.backGround = ImageManager.BACKGROUND2_IMAGE;
         this.maxEnemyNumber = 5;
         this.bossScore = 400;
-        this.scoreFile = "MediumGameScore.txt";
+        scoreFile = "MediumGameScore.txt";
     }
 
 
