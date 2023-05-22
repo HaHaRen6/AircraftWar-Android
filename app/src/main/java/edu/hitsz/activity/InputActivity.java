@@ -54,6 +54,7 @@ public class InputActivity extends AppCompatActivity {
             ScoreDao scoreDao = new ScoreDaoImpl();
             scoreDao.addItem(InputActivity.this, scoreInfo, BaseGame.scoreFile);
 
+            // 切换窗口
             Intent intent = new Intent(InputActivity.this, RankingActivity.class);
             startActivity(intent);
         });

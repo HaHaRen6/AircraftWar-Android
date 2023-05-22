@@ -44,11 +44,6 @@ public class RankingActivity extends AppCompatActivity {
         rankingList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-//                if (position == 0) {
-//                    return false;
-//                }
-
-//                Toast.makeText(RankingActivity.this, position + "  " + id, Toast.LENGTH_SHORT).show();
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(RankingActivity.this);
                 builder.setMessage("确认删除？");
@@ -59,56 +54,30 @@ public class RankingActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Toast.makeText(RankingActivity.this, "删除第" + (position + 1) + "条记录", Toast.LENGTH_SHORT).show();
+
                         ScoreDao scoreDao = new ScoreDaoImpl();
                         scoreDao.getAllItems(RankingActivity.this, BaseGame.scoreFile);
                         scoreDao.sortByScore();
                         String[][] items = scoreDao.outPutItems();
-//                        for (String[] item : items) {
-//                            for (String element : item) {
-//                                System.out.print(element + ' ');
-//                            }
-//                            System.out.println();
-//                        }
                         items[position][3] = "delete";
-//                        for (String[] item : items) {
-//                            for (String element : item) {
-//                                System.out.print(element + ' ');
-//                            }
-//                            System.out.println();
-//                        }
                         scoreDao.deleteByTime(RankingActivity.this, items, BaseGame.scoreFile);
-//                        for (String[] item : items) {
-//                            for (String element : item) {
-//                                System.out.print(element + ' ');
-//                            }
-//                            System.out.println();
-//                        }
+
                         flushAdapter();
                     }
                 });
                 builder.setNegativeButton("否", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
                     }
                 });
                 builder.create().show();
                 return false;
             }
-//            @Override
-//            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-//                Toast.makeText(RankingActivity.this, arg2 + "  " + arg3, Toast.LENGTH_SHORT).show();
-////                Map<String, Object> clkmap = (Map<String, Object>) arg0.getItemAtPosition(arg2);
-////                setTitle(clkmap.get("title").toString()+"的网址为："+clkmap.get("info").toString());
-//            }
         });
 
         // 重新游戏
         Intent intent = new Intent(RankingActivity.this, MainActivity.class);
-        newGame_btn.setOnClickListener(view -> {
-            startActivity(intent);
-        });
-
+        newGame_btn.setOnClickListener(view -> startActivity(intent));
     }
 
     @Override
@@ -134,12 +103,10 @@ public class RankingActivity extends AppCompatActivity {
             data.add(user);
         }
 
-
         return data;
     }
 
     private void flushAdapter() {
-
         // 初始化适配器
         SimpleAdapter simpleAdapter = new SimpleAdapter(
                 this,

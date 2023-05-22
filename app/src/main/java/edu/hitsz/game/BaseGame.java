@@ -213,7 +213,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
             if (timeCountAndNewCycleJudge()) {
                 System.out.println(time);
 
-                /**
+                /*
                  * 新敌机产生
                  */
                 if (enemyAircrafts.size() < maxEnemyNumber) {
@@ -546,19 +546,6 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
             if (mySoundPool != null && soundPoolMap.get("game_over") != null) {
                 mySoundPool.play(soundPoolMap.get("game_over"), 1, 1, 0, 0, 1f);
             }
-
-//
-//            // 产生本次成绩
-//            ScoreInfo scoreInfo = new ScoreInfo();
-//            scoreInfo.setScore(score);
-//            scoreInfo.setDate(dateFormat.format(date));
-//            System.out.println("Your score: " + score);
-//
-//            // 成绩处理
-//            AskName askName = new AskName(scoreInfo, scoreDao, getScoreFile(), this);
-//            Main.cardPanel.add(askName.getMainPanel());
-//            Main.frame.setSize(200, 200);
-//            Main.cardLayout.last(Main.cardPanel);
 
             gameOverFlag = true;
             mbLoop = false;

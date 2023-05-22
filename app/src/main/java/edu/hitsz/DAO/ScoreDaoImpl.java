@@ -101,7 +101,7 @@ public class ScoreDaoImpl implements ScoreDao {
                     fIn.close();
                 }
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         }
     }

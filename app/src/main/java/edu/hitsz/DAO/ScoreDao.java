@@ -26,7 +26,9 @@ public interface ScoreDao {
     void sortByScore();
 
     /**
-     * 打印分数
+     * 获取信息
+     *
+     * @return Items: String[][]
      */
     String[][] outPutItems();
 
