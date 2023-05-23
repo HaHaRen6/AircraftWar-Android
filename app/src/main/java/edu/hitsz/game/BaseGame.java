@@ -225,9 +225,10 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
                         eliteProbability = eliteProbability(time);
 
                         // bossBGM
-                        if (soundPoolMap != null) {
+                        if (bgmMediaPlayer != null && bossMediaPlayer != null) {
                             bgmMediaPlayer.pause();
                             bossMediaPlayer.start();
+
                         }
 
                         Message message = Message.obtain();
@@ -515,7 +516,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
             // 获得分数，获得道具补给
             scoreAdd();
             if (enemyAircraft instanceof BossEnemy) {
-                if (soundPoolMap != null) {
+                if (bossMediaPlayer != null && bgmMediaPlayer != null) {
                     bossMediaPlayer.pause();
                     bgmMediaPlayer.start();
                 }
@@ -667,7 +668,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
             }
         }
 
-        if (mySoundPool != null) {
+        if (bgmMediaPlayer != null && bossMediaPlayer != null) {
             bgmMediaPlayer.stop();
             bossMediaPlayer.stop();
             bgmMediaPlayer.release();
