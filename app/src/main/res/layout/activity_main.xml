@@ -47,6 +47,17 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:typeface="serif"></Button>
+
+        <Button
+            android:id="@+id/multi_btn"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="联机模式"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:typeface="serif"></Button>
     </LinearLayout>
 
     <CheckBox
@@ -54,7 +65,7 @@
         android:layout_width="80dp"
         android:layout_height="60dp"
         android:layout_gravity="center"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="130dp"
         android:text="音乐"
         android:textSize="18sp" />
 </LinearLayout>

@@ -18,8 +18,8 @@ public class EasyGame extends BaseGame {
         return 0;
     }
 
-    public EasyGame(Context context, Handler handler,Boolean musicSwitch) {
-        super(context,handler,musicSwitch);
+    public EasyGame(Context context, Handler handler) {
+        super(context,handler);
         this.backGround = ImageManager.BACKGROUND1_IMAGE;
         this.maxEnemyNumber = 4;
         scoreFile = "EasyGameScore.txt";

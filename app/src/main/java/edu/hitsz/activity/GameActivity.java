@@ -55,11 +55,11 @@ public class GameActivity extends AppCompatActivity {
          */
         BaseGame baseGameView;
         if (gameType == 1) {
-            baseGameView = new MediumGame(this, handler, musicSwitch);
+            baseGameView = new MediumGame(this, handler);
         } else if (gameType == 3) {
-            baseGameView = new HardGame(this, handler, musicSwitch);
+            baseGameView = new HardGame(this, handler);
         } else {
-            baseGameView = new EasyGame(this, handler, musicSwitch);
+            baseGameView = new EasyGame(this, handler);
         }
         setContentView(baseGameView);
 

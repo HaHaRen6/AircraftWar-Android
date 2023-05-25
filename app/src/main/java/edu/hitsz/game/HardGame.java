@@ -16,8 +16,8 @@ public class HardGame extends BaseGame {
 
     private int bossHp = 240;
 
-    public HardGame(Context context, Handler handler,Boolean musicSwitch) {
-        super(context,handler,musicSwitch);
+    public HardGame(Context context, Handler handler) {
+        super(context,handler);
         this.backGround = ImageManager.BACKGROUND3_IMAGE;
         this.maxEnemyNumber = 7;
         this.bossScore = 300;

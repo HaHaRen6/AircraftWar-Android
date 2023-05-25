@@ -155,11 +155,14 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
      */
     public SoundPool mySoundPool = null;
     public HashMap<String, Integer> soundPoolMap = new HashMap<>();
-    public MediaPlayer bgmMediaPlayer;
-    public MediaPlayer bossMediaPlayer;
+    public MediaPlayer bgmMediaPlayer = null;
+    public MediaPlayer bossMediaPlayer = null;
+
+    public static boolean musicSwitch = false;
+    public static boolean multiPlayers = false;
 
 
-    public BaseGame(Context context, Handler handler, Boolean musicSwitch) {
+    public BaseGame(Context context, Handler handler) {
         super(context);
         this.handler = handler;
 
@@ -617,6 +620,10 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
         canvas.drawText("分数:" + this.score, x, y, mPaint);
         y = y + 75;
         canvas.drawText("血量:" + this.heroAircraft.getHp(), x, y, mPaint);
+        if (multiPlayers) {
+            y = y + 75;
+            canvas.drawText("对手血量:" + this.heroAircraft.getHp(), x, y, mPaint);
+        }
     }
 
     @Override

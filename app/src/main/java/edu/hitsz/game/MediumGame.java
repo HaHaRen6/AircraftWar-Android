@@ -18,8 +18,8 @@ public class MediumGame extends BaseGame {
         return (float) Math.min(0.15 + (float) time / 200000, 0.5);
     }
 
-    public MediumGame(Context context, Handler handler,Boolean musicSwitch) {
-        super(context,handler,musicSwitch);
+    public MediumGame(Context context, Handler handler) {
+        super(context,handler);
         this.backGround = ImageManager.BACKGROUND2_IMAGE;
         this.maxEnemyNumber = 5;
         this.bossScore = 400;
