@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
         Button hard_btn = findViewById(R.id.hard_btn);
         Button multi_btn = findViewById(R.id.multi_btn);
         CheckBox music_swc = findViewById(R.id.musicSwitch);
-        Bundle bundle = new Bundle();
 
         getScreenHW();
 
@@ -41,37 +40,33 @@ public class MainActivity extends AppCompatActivity {
         // 普通难度
         medium_btn.setOnClickListener(view -> {
             gameType = 1;
-            bundle.putInt("gameType", gameType);
+            intent.putExtra("gameType", gameType);
             BaseGame.multiPlayers = false;
             BaseGame.musicSwitch = music_swc.isChecked();
-            intent.putExtras(bundle);
             startActivity(intent);
         });
         // 简单难度
         easy_btn.setOnClickListener(view -> {
             gameType = 2;
-            bundle.putInt("gameType", gameType);
+            intent.putExtra("gameType", gameType);
             BaseGame.multiPlayers = false;
             BaseGame.musicSwitch = music_swc.isChecked();
-            intent.putExtras(bundle);
             startActivity(intent);
         });
         // 困难难度
         hard_btn.setOnClickListener(view -> {
             gameType = 3;
-            bundle.putInt("gameType", gameType);
+            intent.putExtra("gameType", gameType);
             BaseGame.multiPlayers = false;
             BaseGame.musicSwitch = music_swc.isChecked();
-            intent.putExtras(bundle);
             startActivity(intent);
         });
         // 联机模式
         multi_btn.setOnClickListener(view -> {
             gameType = 1;
-            bundle.putInt("gameType", gameType);
+            intent.putExtra("gameType", gameType);
             BaseGame.multiPlayers = true;
             BaseGame.musicSwitch = music_swc.isChecked();
-            intent.putExtras(bundle);
             startActivity(intent);
         });
     }

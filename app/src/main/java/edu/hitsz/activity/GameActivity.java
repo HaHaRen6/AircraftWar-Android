@@ -45,9 +45,7 @@ public class GameActivity extends AppCompatActivity {
           接受intent传递的信息
          */
         if (getIntent() != null) {
-            Bundle bundle = getIntent().getExtras();
-            gameType = bundle.getInt("gameType", 1);
-            musicSwitch = bundle.getBoolean("musicSwitch", false);
+            gameType = getIntent().getIntExtra("gameType", 1);
         }
 
         /*

@@ -395,32 +395,34 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
     public static String scoreFile;
 
     private void outCheckAction() {
-        for (AbstractAircraft enemyAircraft : enemyAircrafts) {
+        for (int i = 0; i < enemyAircrafts.size(); i++) {
+            AbstractAircraft enemyAircraft = enemyAircrafts.get(i);
             if (enemyAircraft.getLocationY() >= MainActivity.screenHeight) {
                 publisher.removeSubscriber((Subscriber) enemyAircraft);
                 enemyAircraft.vanish();
             }
         }
-        for (AbstractBullet bullet : enemyBullets) {
-            // 判定 x 轴出界
-            if (bullet.getLocationX() <= 0 || bullet.getLocationX() >= MainActivity.screenWidth) {
-                publisher.removeSubscriber(bullet);
-                bullet.vanish();
-            }
-            if (bullet.getLocationY() >= MainActivity.screenHeight) {
-                publisher.removeSubscriber(bullet);
-                bullet.vanish();
-            }
-        }
-        for (AbstractBullet bullet : heroBullets) {
-            // 判定 x 轴出界
-            if (bullet.getLocationX() <= 0 || bullet.getLocationX() >= MainActivity.screenWidth) {
-                bullet.vanish();
 
-            } else if (bullet.getLocationY() <= 0) {
+        // 判定 y 轴出界
+        for (int i = 0; i < enemyBullets.size(); i++) {
+            AbstractBullet bullet = enemyBullets.get(i);
+            if (bullet.getLocationX() <= 0 || bullet.getLocationX() >= MainActivity.screenWidth
+                    || bullet.getLocationY() >= MainActivity.screenHeight) {
+                publisher.removeSubscriber(bullet);
                 bullet.vanish();
             }
         }
+
+        // 判定 x 轴出界
+        for (int i = 0; i < enemyBullets.size(); i++) {
+            AbstractBullet bullet = enemyBullets.get(i);
+            if (bullet.getLocationX() <= 0 || bullet.getLocationX() >= MainActivity.screenWidth
+                    || bullet.getLocationY() >= MainActivity.screenHeight) {
+                publisher.removeSubscriber(bullet);
+                bullet.vanish();
+            }
+        }
+
     }
 
     private void createSoundPool() {
@@ -441,46 +443,49 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
     private void crashCheckAction() throws InterruptedException {
         // 敌机子弹攻击英雄
         for (int i = 0; i < enemyBullets.size(); i++) {
-            if (enemyBullets.get(i).notValid()) {
+            AbstractBullet enemyBullet = enemyBullets.get(i);
+            if (enemyBullet.notValid()) {
                 continue;
             }
             if (heroAircraft.notValid()) {
                 // 避免多个子弹重复击毁的判定
                 continue;
             }
-            if (heroAircraft.crash(enemyBullets.get(i))) {
+            if (heroAircraft.crash(enemyBullet)) {
                 // 英雄机撞击到敌机子弹，英雄机损失一定生命值
-                heroAircraft.decreaseHp(enemyBullets.get(i).getPower());
-                publisher.removeSubscriber(enemyBullets.get(i));
-                enemyBullets.get(i).vanish();
+                heroAircraft.decreaseHp(enemyBullet.getPower());
+                publisher.removeSubscriber(enemyBullet);
+                enemyBullet.vanish();
             }
         }
 
         // 英雄子弹攻击敌机
         for (int i = 0; i < heroBullets.size(); i++) {
-            if (heroBullets.get(i).notValid()) {
+            AbstractBullet heroBullet = heroBullets.get(i);
+            if (heroBullet.notValid()) {
                 continue;
             }
             for (int j = 0; j < enemyAircrafts.size(); j++) {
-                if (enemyAircrafts.get(j).notValid()) {
+                AbstractAircraft enemyAircraft = enemyAircrafts.get(j);
+                if (enemyAircraft.notValid()) {
                     // 已被其他子弹击毁的敌机，不再检测，避免多个子弹重复击毁同一敌机的判定
                     continue;
                 }
-                if (enemyAircrafts.get(j).crash(heroBullets.get(i))) {
+                if (enemyAircraft.crash(heroBullet)) {
                     if (mySoundPool != null && soundPoolMap.get("bullet_hit") != null) {
                         mySoundPool.play(soundPoolMap.get("bullet_hit"), 1, 1, 0, 0, 1f);
                     }
 
                     // 敌机撞击到英雄机子弹
                     // 敌机损失一定生命值
-                    enemyAircrafts.get(j).decreaseHp(heroBullets.get(i).getPower());
-                    heroBullets.get(i).vanish();
-                    enemyCheckDeath(enemyAircrafts.get(j));
+                    enemyAircraft.decreaseHp(heroBullet.getPower());
+                    heroBullet.vanish();
+                    enemyCheckDeath(enemyAircraft);
 
                 }
                 // 英雄机 与 敌机 相撞，均损毁
-                if (enemyAircrafts.get(j).crash(heroAircraft) || heroAircraft.crash(enemyAircrafts.get(j))) {
-                    enemyAircrafts.get(j).vanish();
+                if (enemyAircraft.crash(heroAircraft) || heroAircraft.crash(enemyAircraft)) {
+                    enemyAircraft.vanish();
                     heroAircraft.decreaseHp(Integer.MAX_VALUE);
                 }
             }
