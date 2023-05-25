@@ -75,9 +75,11 @@ public class RankingActivity extends AppCompatActivity {
             }
         });
 
-        // 重新游戏
-        Intent intent = new Intent(RankingActivity.this, MainActivity.class);
-        newGame_btn.setOnClickListener(view -> startActivity(intent));
+        newGame_btn.setOnClickListener(view -> {
+            // 重新游戏
+            Intent intent = new Intent(RankingActivity.this, MainActivity.class);
+            startActivity(intent);
+        });
     }
 
     @Override

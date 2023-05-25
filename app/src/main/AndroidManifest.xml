@@ -22,6 +22,9 @@
             android:name="edu.hitsz.activity.RankingActivity"
             android:exported="false" />
         <activity
+            android:name="edu.hitsz.activity.MultiScoreActivity"
+            android:exported="false" />
+        <activity
             android:name="edu.hitsz.activity.MainActivity"
             android:exported="true">
             <intent-filter>

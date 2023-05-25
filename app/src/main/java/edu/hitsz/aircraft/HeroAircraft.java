@@ -68,7 +68,7 @@ public class HeroAircraft extends AbstractAircraft {
         }
         heroAircraft.isValid = true;
         heroAircraft.setHp(1000);
-        heroAircraft.setLocation(MainActivity.screenWidth / 2, MainActivity.screenHeight - ImageManager.HERO_IMAGE.getHeight());
+        heroAircraft.setLocation((double) MainActivity.screenWidth / 2, MainActivity.screenHeight - ImageManager.HERO_IMAGE.getHeight());
         return heroAircraft;
     }
 

@@ -71,9 +71,17 @@ public class GameActivity extends AppCompatActivity {
                     Thread.sleep(1000);
                 }
 
-                // 切换至输入姓名界面
-                Intent intent = new Intent(GameActivity.this, InputActivity.class);
-                startActivity(intent);
+
+                if (!BaseGame.multiPlayers) {
+                    // 单机模式后处理
+                    // 切换至输入姓名界面
+                    Intent intent = new Intent(GameActivity.this, InputActivity.class);
+                    startActivity(intent);
+                }
+                else {
+                    Intent intent = new Intent(GameActivity.this, MultiScoreActivity.class);
+                    startActivity(intent);
+                }
 
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);

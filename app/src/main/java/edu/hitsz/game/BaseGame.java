@@ -60,7 +60,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
 
     public static final String TAG = "BaseGame";
     boolean mbLoop = false; // 控制绘画线程的标志位
-    private SurfaceHolder mSurfaceHolder;
+    private final SurfaceHolder mSurfaceHolder;
     private Canvas canvas;  // 绘图的画布
     private Paint mPaint;
     private Handler handler;
@@ -687,6 +687,10 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
             bossMediaPlayer.release();
         }
 
+        /*
+          【Android 多线程消息传递 -- handler】
+          子线程操作UI对象是不安全的
+         */
         Message message = Message.obtain();
         message.what = 1;
         handler.sendMessage(message);
