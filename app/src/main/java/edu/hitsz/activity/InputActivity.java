@@ -33,11 +33,11 @@ public class InputActivity extends AppCompatActivity {
         setContentView(R.layout.activity_input);
 
         Button inputName_btn = findViewById(R.id.inputName_btn);
-        TextView textView_score = findViewById(R.id.textView_score);
+        TextView score_textView = findViewById(R.id.textView_score);
         TextInputEditText textInputEditText = findViewById(R.id.textInputEditText);
 
         // 显示分数
-        textView_score.setText(String.valueOf(BaseGame.getScore()));
+        score_textView.setText(String.valueOf(BaseGame.getScore()));
 
         // 输入名字按钮监听器
         inputName_btn.setOnClickListener(view -> {

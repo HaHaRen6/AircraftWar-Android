@@ -27,14 +27,14 @@ public class MultiScoreActivity extends AppCompatActivity {
         setContentView(R.layout.activity_multi_score);
 
         Button newGame_btn = findViewById(R.id.newGameMulti_btn);
-        TextView textView_score = findViewById(R.id.textView_score);
-        TextView textView_score2 = findViewById(R.id.textView_score2);
-        TextView textView_whoWin = findViewById(R.id.textView_whoWin);
+        TextView score_textView = findViewById(R.id.textView_score);
+        TextView score2_textView = findViewById(R.id.textView_score2);
+        TextView whoWin_textView = findViewById(R.id.textView_whoWin);
 
 
         // 显示分数
-        textView_score.setText(String.valueOf(BaseGame.getScore()));
-        textView_score2.setText(String.valueOf(opponentScore));
+        score_textView.setText(String.valueOf(BaseGame.getScore()));
+        score2_textView.setText(String.valueOf(opponentScore));
         String whoWin;
 
         if (BaseGame.getScore() > opponentScore){
@@ -46,11 +46,13 @@ public class MultiScoreActivity extends AppCompatActivity {
         else {
             whoWin = "平局";
         }
-        textView_whoWin.setText(whoWin);
+        whoWin_textView.setText(whoWin);
 
         newGame_btn.setOnClickListener(view -> {
             // 重新游戏
             Intent intent = new Intent(MultiScoreActivity.this, MainActivity.class);
+            int gameType = 1;
+            intent.putExtra("gameType", gameType);
             startActivity(intent);
         });
 

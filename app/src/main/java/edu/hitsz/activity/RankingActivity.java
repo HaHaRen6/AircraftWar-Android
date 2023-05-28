@@ -59,7 +59,7 @@ public class RankingActivity extends AppCompatActivity {
                         scoreDao.getAllItems(RankingActivity.this, BaseGame.scoreFile);
                         scoreDao.sortByScore();
                         String[][] items = scoreDao.outPutItems();
-                        items[position][3] = "delete";
+                        items[position][3] = "delete" ;
                         scoreDao.deleteByTime(RankingActivity.this, items, BaseGame.scoreFile);
 
                         flushAdapter();

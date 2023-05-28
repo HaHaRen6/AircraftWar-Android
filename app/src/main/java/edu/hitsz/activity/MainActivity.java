@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
           不同按钮开始不同难度游戏
          */
         Intent intent = new Intent(MainActivity.this, GameActivity.class);
+        Intent intent1 = new Intent(MainActivity.this, MultiReadyActivity.class);
         // 普通难度
         medium_btn.setOnClickListener(view -> {
             gameType = 1;
@@ -63,11 +64,9 @@ public class MainActivity extends AppCompatActivity {
         });
         // 联机模式
         multi_btn.setOnClickListener(view -> {
-            gameType = 1;
-            intent.putExtra("gameType", gameType);
             BaseGame.multiPlayers = true;
             BaseGame.musicSwitch = music_swc.isChecked();
-            startActivity(intent);
+            startActivity(intent1);
         });
     }
 
