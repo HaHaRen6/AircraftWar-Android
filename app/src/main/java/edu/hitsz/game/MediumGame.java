@@ -28,26 +28,26 @@ public class MediumGame extends BaseGame {
 
 
     @Override
-    protected AbstractAircraft createBoss(Publisher publisher) {
+    protected AbstractAircraft createBoss(Publisher publisher, Long seed) {
         EnemyFactory enemyFactory = new BossEnemyFactory();
-        AbstractAircraft newEnemy = enemyFactory.createEnemy();
+        AbstractAircraft newEnemy = enemyFactory.createEnemy(seed);
         publisher.addSubscriber((Subscriber) newEnemy);
         return newEnemy;
     }
 
     @Override
-    protected AbstractAircraft createEliteEnemy(Publisher publisher, int time) {
+    protected AbstractAircraft createEliteEnemy(Publisher publisher, int time, Long seed) {
         EnemyFactory enemyFactory = new EliteEnemyFactory();
-        AbstractAircraft newEnemy = enemyFactory.createEnemy();
+        AbstractAircraft newEnemy = enemyFactory.createEnemy(seed);
         newEnemy.setHp(90 + time / 2000);
         publisher.addSubscriber((Subscriber) newEnemy);
         return newEnemy;
     }
 
     @Override
-    protected AbstractAircraft createMobEnemy(Publisher publisher, int time) {
+    protected AbstractAircraft createMobEnemy(Publisher publisher, int time, Long seed) {
         EnemyFactory enemyFactory = new MobEnemyFactory();
-        AbstractAircraft newEnemy = enemyFactory.createEnemy();
+        AbstractAircraft newEnemy = enemyFactory.createEnemy(seed);
         newEnemy.setSpeedY(6 + time / 10000);
         publisher.addSubscriber((Subscriber) newEnemy);
         return newEnemy;

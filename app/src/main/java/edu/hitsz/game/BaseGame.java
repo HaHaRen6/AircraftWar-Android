@@ -148,6 +148,8 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
     private int cycleDuration = 600;
     private int cycleTime = 0;
 
+    private long seed = 555L;
+
     /*
      * 声音相关
      * 1. 通过 SoundPool 实现
@@ -222,6 +224,8 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
                 if (enemyAircrafts.size() < maxEnemyNumber) {
                     // 产生随机数，用判断生成普通敌机还是精英敌机
                     Random randEnemy = new Random();
+                    randEnemy.setSeed(seed);
+                    seed = randEnemy.nextLong();
 
                     if (addBoss) {
                         // 中等难度和困难难度精英敌机产生概率随时间变化
@@ -239,7 +243,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
                         handler.sendMessage(message);
 
                         Log.d("BaseGame", "produceBoss");
-                        AbstractAircraft newEnemy = createBoss(publisher);
+                        AbstractAircraft newEnemy = createBoss(publisher, seed);
                         if (newEnemy != null) {
                             enemyAircrafts.add(newEnemy);
                         }
@@ -247,12 +251,12 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
                     } else if (randEnemy.nextFloat() < eliteProbability) {
                         // 产生精英敌机
                         Log.d("BaseGame", "produceEliteEnemy");
-                        AbstractAircraft newEnemy = createEliteEnemy(publisher, time);
+                        AbstractAircraft newEnemy = createEliteEnemy(publisher, time, seed);
                         enemyAircrafts.add(newEnemy);
                     } else {
                         // 产生普通敌机
                         Log.d("BaseGame", "produceMobEnemy");
-                        AbstractAircraft newEnemy = createMobEnemy(publisher, time);
+                        AbstractAircraft newEnemy = createMobEnemy(publisher, time, seed);
                         enemyAircrafts.add(newEnemy);
                     }
                 }
@@ -324,21 +328,21 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
      *
      * @return boss
      */
-    protected abstract AbstractAircraft createBoss(Publisher publisher);
+    protected abstract AbstractAircraft createBoss(Publisher publisher, Long seed);
 
     /**
      * 产生精英机
      *
      * @return EliteEnemy
      */
-    protected abstract AbstractAircraft createEliteEnemy(Publisher publisher, int time);
+    protected abstract AbstractAircraft createEliteEnemy(Publisher publisher, int time, Long seed);
 
     /**
      * 产生普通机
      *
      * @return MobEnemy
      */
-    protected abstract AbstractAircraft createMobEnemy(Publisher publisher, int time);
+    protected abstract AbstractAircraft createMobEnemy(Publisher publisher, int time, Long seed);
 
     private void shootAction() {
         // 英雄射击

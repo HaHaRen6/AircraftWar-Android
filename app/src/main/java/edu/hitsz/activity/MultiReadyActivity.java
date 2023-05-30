@@ -19,6 +19,8 @@ public class MultiReadyActivity extends AppCompatActivity {
     public static int screenHeight;
 
     private String host;
+    private int port;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,12 +31,14 @@ public class MultiReadyActivity extends AppCompatActivity {
         Button connect_btn = findViewById(R.id.connect_button);
         TextView connectState_textView = findViewById(R.id.connect_state_textView);
         TextInputEditText connect_textInput = findViewById(R.id.connect_textInput);
+        TextInputEditText connectPort_textInput = findViewById(R.id.connectPort_textInput);
 
         // 显示分数
 //        textView_score.setText(String.valueOf(BaseGame.getScore()));
 
         connect_btn.setOnClickListener(view -> {
-            host = String.valueOf(connect_textInput.getText());
+            host = connect_textInput.getText().toString();
+            port = Integer.parseInt(connectPort_textInput.getText().toString());
             // 重新游戏
             Intent intent = new Intent(MultiReadyActivity.this, GameActivity.class);
             startActivity(intent);

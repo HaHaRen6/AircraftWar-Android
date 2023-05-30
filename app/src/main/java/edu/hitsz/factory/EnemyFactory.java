@@ -13,5 +13,5 @@ public interface EnemyFactory {
      *
      * @return 创建好的敌机
      */
-    AbstractAircraft createEnemy();
+    AbstractAircraft createEnemy(Long seed);
 }

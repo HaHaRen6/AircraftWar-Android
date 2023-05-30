@@ -26,19 +26,19 @@ public class EasyGame extends BaseGame {
     }
 
     @Override
-    protected AbstractAircraft createBoss(Publisher publisher) {
+    protected AbstractAircraft createBoss(Publisher publisher, Long seed) {
         return null;
     }
 
     @Override
-    protected AbstractAircraft createEliteEnemy(Publisher publisher, int time) {
+    protected AbstractAircraft createEliteEnemy(Publisher publisher, int time, Long seed) {
         return null;
     }
 
     @Override
-    protected AbstractAircraft createMobEnemy(Publisher publisher, int time) {
+    protected AbstractAircraft createMobEnemy(Publisher publisher, int time, Long seed) {
         EnemyFactory enemyFactory = new MobEnemyFactory();
-        AbstractAircraft newEnemy = enemyFactory.createEnemy();
+        AbstractAircraft newEnemy = enemyFactory.createEnemy(seed);
         publisher.addSubscriber((Subscriber) newEnemy);
         return newEnemy;
     }
