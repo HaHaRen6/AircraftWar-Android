@@ -25,7 +25,7 @@
             android:name="edu.hitsz.activity.MultiScoreActivity"
             android:exported="false" />
         <activity
-            android:name="edu.hitsz.activity.MultiReadyActivity"
+            android:name="edu.hitsz.activity.MultiActivity"
             android:exported="false" />
         <activity
             android:name="edu.hitsz.activity.MainActivity"

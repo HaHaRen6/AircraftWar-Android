@@ -128,6 +128,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
      * 游戏得分
      */
     private static int score = 0;
+    private int opponentScore = 0;
 
     /**
      * 游戏时间 (ms)
@@ -357,6 +358,13 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
         }
     }
 
+    public void setSeed(Long seed) {
+        this.seed = seed;
+    }
+
+    public void setOpponentScore(int opponentScore){
+        this.opponentScore = opponentScore;
+    }
 
     /**
      * @return 是否跨越到新的周期 (boolean)
@@ -631,7 +639,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
         canvas.drawText("血量:" + this.heroAircraft.getHp(), x, y, mPaint);
         if (multiPlayers) {
             y = y + 75;
-            canvas.drawText("对手血量:" + this.heroAircraft.getHp(), x, y, mPaint);
+            canvas.drawText("对手血量:" + opponentScore, x, y, mPaint);
         }
     }
 

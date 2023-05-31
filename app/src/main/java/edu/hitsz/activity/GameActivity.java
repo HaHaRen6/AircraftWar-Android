@@ -10,6 +10,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Date;
+
 import edu.hitsz.game.BaseGame;
 import edu.hitsz.game.EasyGame;
 import edu.hitsz.game.HardGame;
@@ -48,16 +50,24 @@ public class GameActivity extends AppCompatActivity {
             gameType = getIntent().getIntExtra("gameType", 1);
         }
 
+        // 设置日期为种子
+        Date currentDate = new Date();
+        // 获取日期的毫秒表示
+        long seed = currentDate.getTime();
+
         /*
           开始不同难度的游戏
          */
         BaseGame baseGameView;
         if (gameType == 1) {
             baseGameView = new MediumGame(this, handler);
+            baseGameView.setSeed(seed);
         } else if (gameType == 3) {
             baseGameView = new HardGame(this, handler);
+            baseGameView.setSeed(seed);
         } else {
             baseGameView = new EasyGame(this, handler);
+            baseGameView.setSeed(seed);
         }
         setContentView(baseGameView);
 
@@ -71,23 +81,15 @@ public class GameActivity extends AppCompatActivity {
                     Thread.sleep(1000);
                 }
 
-
-                if (!BaseGame.multiPlayers) {
-                    // 单机模式后处理
-                    // 切换至输入姓名界面
-                    Intent intent = new Intent(GameActivity.this, InputActivity.class);
-                    startActivity(intent);
-                }
-                else {
-                    Intent intent = new Intent(GameActivity.this, MultiScoreActivity.class);
-                    startActivity(intent);
-                }
+                // 单机模式后处理
+                // 切换至输入姓名界面
+                Intent intent = new Intent(GameActivity.this, InputActivity.class);
+                startActivity(intent);
 
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }).start();
-
     }
 
 
