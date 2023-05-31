@@ -16,8 +16,7 @@ public class EliteEnemyFactory implements EnemyFactory {
 
     @Override
     public EliteEnemy createEnemy(Long seed) {
-        Random randonX = new Random();
-        randonX.setSeed(seed);
+        Random randonX = new Random(seed);
         EliteEnemy eliteEnemy = new EliteEnemy((int) (randonX.nextDouble() * (MainActivity.screenWidth - 2 * ImageManager.ELITE_ENEMY_IMAGE.getWidth()) + ImageManager.ELITE_ENEMY_IMAGE.getWidth()),
                 (int) (Math.random() * MainActivity.screenHeight * 0.03),
                 0,

@@ -15,8 +15,7 @@ public class MobEnemyFactory implements EnemyFactory {
 
     @Override
     public MobEnemy createEnemy(Long seed) {
-        Random randonX = new Random();
-        randonX.setSeed(seed);
+        Random randonX = new Random(seed);
         return new MobEnemy((int) (randonX.nextDouble() * (MainActivity.screenWidth - 2 * ImageManager.MOB_ENEMY_IMAGE.getWidth()) + ImageManager.MOB_ENEMY_IMAGE.getWidth()),
                 (int) (Math.random() * MainActivity.screenHeight * 0.03),
                 0,

@@ -16,8 +16,7 @@ public class BossEnemyFactory implements EnemyFactory {
 
     @Override
     public BossEnemy createEnemy(Long seed) {
-        Random randonX = new Random();
-        randonX.setSeed(seed);
+        Random randonX = new Random(seed);
         BossEnemy bossEnemy = new BossEnemy((int) (randonX.nextDouble() * (MainActivity.screenWidth - 2 * ImageManager.BOSS_ENEMY_IMAGE.getWidth()) + ImageManager.BOSS_ENEMY_IMAGE.getWidth()),
                 (int) (ImageManager.BOSS_ENEMY_IMAGE.getHeight() / 2),
                 4,
